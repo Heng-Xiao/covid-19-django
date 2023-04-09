@@ -1,0 +1,2088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>疫情数据可视化大屏</title>
+    <link rel="stylesheet" href="../static/css/index.css"/>
+</head>
+<body>
+<!-- 头部 -->
+<header>
+    <h1>国内疫情大数据可视化平台</h1>
+    <a href="{% url 'update' %}" class="a-access">
+        <button class="button type1">
+            更新数据
+        </button>
+    </a>
+    <div class="show-time"></div>
+    <script>
+        var t = null;
+        t = setTimeout(time, 1000); //开始运行
+        function time() {
+            clearTimeout(t); //清除定时器
+            dt = new Date();
+            var y = dt.getFullYear();
+            var mt = dt.getMonth() + 1;
+            var day = dt.getDate();
+            var h = dt.getHours(); //获取时
+            var m = dt.getMinutes(); //获取分
+            var s = dt.getSeconds(); //获取秒
+            document.querySelector(".show-time").innerHTML ="当前时间：" + y + "年" + mt +
+                "月" + day + "日-" + h + "时" + m + "分" + s + "秒";
+            t = setTimeout(time, 1000); //设定定时器，循环运行
+        }
+    </script>
+</header>
+<!-- 页面主题 -->
+<div id="light" class="white_content">
+    <button href="javascript:void(0)"
+            onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">
+        关闭本窗口
+    </button>
+    <div id="main" class="main" style="width: 168.45vh;height:75.15vh;left: 0;">
+    </div>
+</div>
+<div id="fade" class="black_overlay"></div>
+<div id="light2" class="white_content">
+    <button href="javascript:void(0)"
+            onclick="document.getElementById('light2').style.display='none';document.getElementById('fade2').style.display='none'">
+        关闭本窗口
+    </button>
+    <button id="education" href="javascript:void(0)">各省感染数量与各省在校学生人数关系</button>
+    <button id="citypopulationrate" href="javascript:void(0)">各省感染数量与各省城镇化率关系</button>
+    <button id="gdp" href="javascript:void(0)">各省感染数量与各省gdp关系</button>
+    <button id="doctor" href="javascript:void(0)">各省卫生水平</button>
+    <div id="main2" class="main2" style="width: 168.45vh;height:75.15vh;left: 0;">
+    </div>
+</div>
+<div id="fade2" class="black_overlay"></div>
+<!-- 页面主体 -->
+<section class="mainbox">
+    <!-- 左侧盒子 -->
+    <div class="column">
+        <div class="panel a7">
+            <h2>最新疫情新闻关键字</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel a2">
+            <h2>近两月新增确诊(本土/境外输入)分布</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel a1">
+            <h2>国内新冠疫情死亡率</h2>
+            <!-- 图表放置盒子 -->
+            <div class="chart"></div>
+            <!-- 伪元素绘制盒子下边角 -->
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+    <!-- 中间盒子 -->
+    <div class="column">
+        <!-- 头部 no模块 -->
+        <div class="no">
+            <div class="no-hd">
+                <ul>
+                    <li>{{ confirmedCount|safe }}</li>
+                    <li>{{ currentConfirmedCount|safe }}</li>
+                    <li>{{ suspectedCount|safe }}</li>
+                    <li>{{ deadCount|safe }}</li>
+                </ul>
+            </div>
+            <div class="no-bd">
+                <ul>
+                    <li>累计确诊人数</li>
+                    <li>现存确诊人数</li>
+                    <li>境外输入人数</li>
+                    <li>累计死亡人数</li>
+                </ul>
+            </div>
+        </div>
+        <!-- 地图模块 -->
+        <div class="map">
+            <h2><a href="javascript:;
+                    ">全国累计确诊分布</a>
+                <a href="javascript:void(0)"
+                   onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'"
+                   ;>境外输入确诊分布</a>
+            </h2>
+            <div class="map1"></div>
+            <div class="map2"></div>
+            <div class="map3"></div>
+            <div class="chart"></div>
+        </div>
+    </div>
+    <!-- 右侧盒子 -->
+    <div class="column">
+
+        <div class="panel bar2">
+            <h2>
+                <a href="javascript:void(0)"
+                   onclick="document.getElementById('light2').style.display='block';document.getElementById('fade2').style.display='block'"
+                   ;>城镇化率与确诊数量关系(点击放大)</a>
+            </h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel a3">
+            <h2>风险地区情况</h2>
+            <ul class="tabnav">
+                <li style=" height: auto;">
+                    <div class="gdhead">
+                        <span class="span6">序号</span><span class="span3">风险地区名</span><span class="span4">风险地区程度</span>
+                    </div>
+                    <div class="scrollDiv" style=" height:2.40rem">
+                        <ul class="smjl">
+                            {% for k,v in riskAreas.items %}
+                                <li>
+                                    <span class="span5">{{ forloop.counter }}</span>
+                                    <span class="span1">{{ k }}</span>
+                                    {% if  v  == '高风险地区' %}
+                                        <span class="span2" style="color:rgba(	255,0,0,1)">{{ v }} </span>
+                                    {% endif %}
+                                    {% if  v  == '中风险地区' %}
+                                        <span class="span2" style="color: rgba(	255,255,0,0.8)">{{ v }} </span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+            <div class="panel-footer"></div>
+        </div>
+        <div class="panel a5">
+            <h2>各省确诊占比</h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+</section>
+<section class="mainbox">
+    <div class="column">
+        <div class="panel linecountry">
+            <h2><a href="javascript:;
+                    ">全国疫情人数变化曲线</a><a href="javascript:;">全国新增人数堆叠条形图</a></h2>
+            <div class="chart"></div>
+            <div class="panel-footer"></div>
+        </div>
+    </div>
+</section>
+<script src="../static/js/flexible.js"></script>
+<script src="../static/js/echarts.min.js"></script>
+<script src="../static/js/jquery.js"></script>
+<!-- 引入china.js 完成地图模块 -->
+<script src="../static/js/china.js"></script>
+<script src="../static/js/echarts-wordcloud.js"></script>
+<script src="../static/js/jquery-1.8.3.min.js"></script>
+<script src="../static/js/jquery.liMarquee.js"></script>
+<script>
+    //右2 表格移动js
+    $(function () {
+        $('.scrollDiv').liMarquee({
+            direction: 'up',
+            scrollamount: 30,
+            runshort: false
+        });
+    });
+</script>
+<script>
+    // 左上仪表盘a1
+    (function () {
+        // 1.实例化对象
+        var myChart = echarts.init(document.querySelector(".a1 .chart"));
+        // 2.指定配置项和数据
+        option = {
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [{
+                min: 0,
+                max: 10,
+                radius: '100%',
+                type: 'gauge',
+                axisLine: {
+                    lineStyle: {
+                        width: 20,
+                        color: [
+                            [0.3, '#67e0e3'],
+                            [0.7, '#37a2da'],
+                            [1, 'rgba(245,114,108,1)']
+                            {#[1, 'rgba(255,0,0,1)']#}
+                        ]
+                    }
+                },
+                pointer: {
+                    itemStyle: {
+                        color: 'auto'
+                    }
+                },
+                axisTick: {
+                    distance: -30,
+                    length: 6,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 2
+                    }
+                },
+                splitLine: {
+                    distance: -30,
+                    length: 25,
+                    lineStyle: {
+                        color: '#fff',
+                        width: 3
+                    }
+                },
+                axisLabel: {
+                    color: 'auto',
+                    distance: 5,
+                    fontSize: 10
+                },
+                detail: {
+                    valueAnimation: true,
+                    formatter: '{value}%',
+                    color: 'auto',
+                    fontSize: 23
+                },
+                data: [{
+                    'name': '',
+                    'value': {{rate|safe}}
+                }]
+
+            }]
+        };
+        option && myChart.setOption(option);
+    })();
+
+
+    // 左上折线图a2
+    (function () {
+
+        var year = {{ year|safe }};
+
+        var importedCase = {{ importedCase }};
+
+        var localConfirmadd = {{ localConfirmadd }};
+        var index = 20;
+        var option = {
+            xAxis: [{
+                type: 'category',
+                data: function () {
+                    var list = [];
+                    for (var i = 0; i < index; i++) {
+                        list.push(year[i]);
+                    }
+                    return list;
+                }(),
+                splitLine: {show: false},//去除网格线
+
+                axisLine: {
+                    lineStyle: {
+                        type: 'solid',
+                        color: "#4c9bfd",//左边线的颜色
+                        width: '1.5'//坐标线的宽度
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: "#4c9bfd",//坐标值得具体的颜色
+
+                    }
+                }
+            }],
+            yAxis: {
+                type: 'value',
+
+                splitLine: {show: false},//去除网格线
+                splitArea: {show: false},//保留网格区域
+                axisLine: {
+                    show: false,//去除轴线
+                    lineStyle: {
+                        type: 'solid',
+                        color: "#4c9bfd",
+                        width: '1'
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: "#4c9bfd",
+                    }
+                }
+
+            },
+            tooltip: {
+                trigger: 'axis',
+                textStyle: {
+                    fontSize: 15,
+                    color: '#fff'
+                }
+            },
+            grid: {
+                top: '5%',
+                left: '2%',
+                right: '4%',
+                bottom: '1%',
+                containLabel: true
+            },
+
+            legend: {
+                data: ['境外新增确诊人数', '本土新增确诊人数'],
+                textStyle: {//图例文字的样式
+                    color: "rgba(255,255,255,.5)",
+                    fontSize: 12
+                }
+            },
+            series: [
+                {
+                    // stack: 'Total',
+                    name: '境外新增确诊人数',
+                    data: function () {
+                        var list = [];
+                        for (var i = 0; i < index; i++) {
+                            list.push(importedCase[i]);
+                        }
+                        return list;
+                    }(),
+                    symbol: 'none',
+                    type: 'line',
+                    color: '#ff0000'
+                },
+                {
+                    name: '本土新增确诊人数',
+                    data: function () {
+                        var list = [];
+                        for (var i = 0; i < index; i++) {
+                            list.push(localConfirmadd[i]);
+                        }
+                        return list;
+                    }(),
+                    symbol: 'none',
+                    type: 'bar',
+                    color: '#59EEF2'
+
+                }
+            ]
+        };
+        var myChart = echarts.init(document.querySelector(".a2 .chart"));
+        myChart.setOption(option);
+        setInterval(function () {
+            if (index == year.length - 1) {
+                index = 0;
+            }
+            var data = option.series[0].data;
+            data.shift();
+            data.push(importedCase[index]);
+            var data1 = option.series[1].data;
+            data1.shift();
+            data1.push(localConfirmadd[index]);
+            option.xAxis[0].data.shift();
+            option.xAxis[0].data.push(year[index++]);
+            myChart.setOption(option);
+        }, 700);
+        // 4.让图表随屏幕自适应
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        })
+
+    })();
+
+    // 各省确诊比例饼图
+    (function () {
+        var areadata = {{ areadata | safe }};
+        var hubaiAndOtherData = {{ hubaiAndOtherData | safe}};
+        var myChart = echarts.init(document.querySelector(".a5 .chart"));
+        //各省份确诊占比
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+
+            series: [
+                {
+                    name: '省份',
+                    type: 'pie',
+                    selectedMode: 'single',
+                    radius: [0, '40%'],
+
+                    label: {
+                        show: false,
+                        position: 'inner',
+
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: hubaiAndOtherData,
+                    color: ['rgba(89,238,242,0.8)', '#37a2da','rgba(245,114,108,1)'],
+                },
+                {
+                    name: '除湖北、香港外占比',
+                    type: 'pie',
+                    bottom: 0,
+                    startAngle: 135,
+                    radius: ['55%', '75%'],
+                    center: ['50%', '52%'],
+                    {#radius: ['95%', '65%'],#}
+                    {#center: ['50%', '52%'],#}
+                    labelLine: {
+                        normal: {
+                            show: true,
+                            length: 20,
+                            length2: 20
+                        }
+                    },
+                    label: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 11    //文字的字体大小
+                        },
+                    },
+
+                    avoidLabelOverlap: true,
+                    data: areadata,
+                    color: [
+                        '#8B0000', '#CD0000', '#EE0000', '#FF0000',
+                        '#CD3700', '#EE4000', '#FF4500', '#EE5C42', '#FF6347',
+                        '#EE9A00', '#FFA500',
+                        '#EEB422', '#EEEE00', '#FFFF00',
+                        '#32CD32', '#00FF00', '#7CFC00',
+                        '#00FF7F', '#7FFFD4', '#00FFFF', '#40E0D0', '#00CED1',
+                        '#AFEEEE', '#87CEFA', '#87CEEB', '#00BFFF', '#1E90FF', '#4169E1', '#8470FF', '#7B68EE', '#6A5ACD', '#483D8B',
+                        '#9B30FF', '#912CEE', '#7D26CD', '#551A8B'
+
+                    ],
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+    })();
+
+    //右上城镇化率与确诊数量关系
+    function ShowCityRareRelationship() {
+
+        var totaldata = {{ cityrateAndConfirmed | safe }};
+        var average_x = {{ confirmedAvg }};
+
+        var myChart = echarts.init(document.querySelector(".main2"));
+        myChart.clear();
+        var option = {
+            title: {
+                text: "各省城镇化率与确诊人数关系散点图（未包含湖北）",
+                textStyle: {
+                    color: 'white'
+                },
+                left: '30%',
+                top: '5%'
+
+            },
+
+            grid: {
+                top: "20%",
+                bottom: "15%",
+                left: 0,
+                right: "5%",
+                containLabel: true,
+                show: false
+
+            },
+            tooltip: {
+                show: false,
+                trigger: 'item'
+            },
+            axisPointer: {
+                show: true,
+                snap: true,
+                lineStyle: {
+                    type: 'dashed'
+                },
+                label: {
+                    show: true,
+                    margin: 6,
+                    backgroundColor: '#556',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+            },
+            xAxis: {
+                name: "累计确诊人数",
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: "white",
+                    padding: [5, 10, 0,]
+                },
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+            },
+            yAxis: {
+                name: "城镇化率（%）",
+                nameTextStyle: {
+                    color: "white",
+                    fontSize: 12,
+                    padding: [10, 10, 0, 50]
+                },
+                nameLocation: "end",
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: [0],
+                    left: '93%',
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [{
+                symbolSize: 5,
+                data: totaldata,
+                markLine: {
+                    lineStyle: {
+                        type: 'solid'
+                    },
+                    data: [
+                        {type: 'average', name: '平均值'},
+                        {xAxis: average_x}
+                    ]
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}',
+                    color: 'rgba(89,238,242,0.8)',
+                },
+                type: 'effectScatter',
+            }]
+        };
+
+        myChart.setOption(option);
+
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+
+        // })
+    };
+    // 城镇化率与确诊数量关系
+    (function () {
+
+        var totaldata = {{ cityrateAndConfirmed | safe }};
+        var average_x = {{ confirmedAvg }};
+
+        var myChart = echarts.init(document.querySelector(".bar2 .chart"));
+        myChart.clear();
+        var option = {
+
+            grid: {
+                top: '15%',
+                left: '4%',
+                right: '4%',
+                bottom: '8%',
+                containLabel: true,
+                show: false
+            },
+            tooltip: {
+                show: false,
+                trigger: 'item'
+            },
+            axisPointer: {
+                show: true,
+                snap: true,
+                lineStyle: {
+                    type: 'dashed'
+                },
+                label: {
+                    show: true,
+                    margin: 6,
+                    backgroundColor: '#556',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+            },
+            xAxis: {
+                name: "累计确诊人数",
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: "rgba(255,255,255,.7)",
+                    padding: [5, 10, 0,]
+                },
+                axisLabel: {
+                    color: "#4c9bfd",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#4c9bfd'
+                    }
+                }
+
+            },
+            yAxis: {
+                min: 30,
+                name: "城镇化率（%）",
+                nameTextStyle: {
+                    color: "rgba(255,255,255,.7)",
+                    fontSize: 12,
+                    padding: [10, 10, 0, 50]
+                },
+                nameLocation: "end",
+                axisLabel: {
+                    color: "#4c9bfd",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#4c9bfd'
+                    }
+                }
+
+
+            },
+            dataZoom: [
+
+                {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [{
+                symbolSize: 5,
+                data: totaldata,
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}',
+                    color: 'rgba(89,238,242,0.8)',
+                },
+                type: 'effectScatter',
+            }]
+        };
+
+        myChart.setOption(option);
+
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+
+        //})
+
+
+        ShowCityRareRelationship();
+
+
+    })();
+
+
+    //城镇化与确诊感染关系
+    (function () {
+
+        var totaldata = {{ cityrateAndConfirmed | safe }};
+        var average_x = {{ confirmedAvg }};
+
+        var myChart = echarts.init(document.querySelector(".main2"));
+        myChart.clear();
+        var option = {
+            title: {
+                text: "各省城镇化率与确诊人数关系散点图（未包含湖北）",
+                textStyle: {
+                    color: 'white'
+                },
+                left: '30%',
+                top: '5%'
+
+            },
+
+            grid: {
+                top: "20%",
+                bottom: "15%",
+                left: 0,
+                right: "5%",
+                containLabel: true,
+                show: false
+
+            },
+            tooltip: {
+                show: false,
+                trigger: 'item'
+            },
+            axisPointer: {
+                show: true,
+                snap: true,
+                lineStyle: {
+                    type: 'dashed'
+                },
+                label: {
+                    show: true,
+                    margin: 6,
+                    backgroundColor: '#556',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+            },
+            xAxis: {
+                name: "累计确诊人数",
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: "white",
+                    padding: [5, 10, 0,]
+                },
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+            },
+            yAxis: {
+                name: "城镇化率（%）",
+                nameTextStyle: {
+                    color: "white",
+                    fontSize: 12,
+                    padding: [10, 10, 0, 50]
+                },
+                nameLocation: "end",
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: [0],
+                    left: '93%',
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [{
+                symbolSize: 5,
+                data: totaldata,
+                markLine: {
+                    lineStyle: {
+                        type: 'solid'
+                    },
+                    data: [
+                        {type: 'average', name: '平均值'},
+                        {xAxis: average_x}
+                    ]
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}',
+                    color: 'rgba(89,238,242,0.8)',
+                },
+                type: 'effectScatter',
+            }]
+        };
+
+        myChart.setOption(option);
+
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+    })();
+
+    //gdp与确诊人数
+    function showRL_GDP() {
+
+        var totaldata = {{ gdpAndConfirmed | safe}};
+        var average_x = {{ confirmedAvg }};
+
+        var myChart = echarts.init(document.querySelector(".main2"));
+        myChart.clear();
+        var option = {
+            title: {
+                text: "各省GDP与确诊人数关系散点图（未包含湖北）",
+                textStyle: {
+                    color: 'white'
+                },
+                left: '30%',
+                top: '5%'
+
+            },
+
+            grid: {
+                top: "20%",
+                bottom: "15%",
+                left: 0,
+                right: "5%",
+                containLabel: true,
+                show: false
+
+            },
+            tooltip: {
+                show: false,
+                trigger: 'item'
+            },
+            axisPointer: {
+                show: true,
+                snap: true,
+                lineStyle: {
+                    type: 'dashed'
+                },
+                label: {
+                    show: true,
+                    margin: 6,
+                    backgroundColor: 'rgba(89,238,242,0.8)',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+            },
+            xAxis: {
+                name: "累计确诊人数",
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: "white",
+                    padding: [5, 10, 0,]
+                },
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+            },
+            yAxis: {
+                name: "GDP(亿元 数据来源-国家统计局)",
+                nameTextStyle: {
+                    color: "white",
+                    fontSize: 12,
+                    padding: [10, 10, 0, 110]
+                },
+                nameLocation: "end",
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: [0],
+                    left: '93%',
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [{
+                symbolSize: 5,
+                data: totaldata,
+                markLine: {
+                    lineStyle: {
+                        type: 'solid'
+                    },
+                    data: [
+                        {type: 'average', name: '平均值'},
+                        {xAxis: average_x}
+                    ]
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}',
+                    color: 'rgba(89,238,242,1)'
+                },
+                type: 'effectScatter'
+            }]
+        };
+
+        myChart.setOption(option);
+
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+
+    }
+
+    //与在校学生人数关系
+    function showRL_StudentsInSchool() {
+        var totaldata ={{ studentsInSchoolAndConfirmed | safe }};
+        var average_x = {{ confirmedAvg }};
+
+        var myChart = echarts.init(document.querySelector(".main2"));
+        myChart.clear();
+        var option = {
+            title: {
+                text: "各省在校学生人数与确诊人数关系散点图（未包含湖北）",
+                textStyle: {
+                    color: 'white'
+                },
+                left: '30%',
+                top: '5%'
+
+            },
+
+            grid: {
+                top: "20%",
+                bottom: "15%",
+                left: 0,
+                right: "5%",
+                containLabel: true,
+                show: false
+
+            },
+            tooltip: {
+                show: false,
+                trigger: 'item'
+            },
+            axisPointer: {
+                show: true,
+                snap: true,
+                lineStyle: {
+                    type: 'dashed'
+                },
+                label: {
+                    show: true,
+                    margin: 6,
+                    backgroundColor: '#556',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+            },
+            xAxis: {
+                name: "累计确诊人数",
+                nameLocation: 'center',
+                nameTextStyle: {
+                    color: "white",
+                    padding: [5, 10, 0,]
+                },
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+            },
+            yAxis: {
+                name: "在校学生人数",
+                nameTextStyle: {
+                    color: "white",
+                    fontSize: 12,
+                    padding: [10, 10, 0, 110]
+                },
+                nameLocation: "end",
+                axisLabel: {
+                    color: "white",
+                    fontSize: 8
+                },
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: 'white'
+                    }
+                }
+
+
+            },
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: [0],
+                    left: '93%',
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                },
+                {
+                    type: 'inside',
+                    yAxisIndex: [0],
+                    start: 0,
+                    end: 100
+                }
+            ],
+            series: [{
+                symbolSize: 5,
+                data: totaldata,
+
+                markLine: {
+                    lineStyle: {
+                        type: 'solid'
+                    },
+                    data: [
+                        {type: 'average', name: '平均值'},
+                        {xAxis: average_x}
+                    ]
+                },
+                label: {
+                    show: true,
+                    position: 'right',
+                    formatter: '{b}',
+                    color: 'rgba(89,238,242,0.8)',
+                },
+                type: 'effectScatter',
+            }]
+        };
+
+        myChart.setOption(option);
+
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+    }
+
+    //卫生水平
+    function showMedical() {
+        var xdata = {{ areaname1 | safe}};
+        var data = {{  doctor | safe}};
+        var myChart = echarts.init(document.querySelector(".main2"));
+        myChart.clear();
+        var option = {
+            title: {
+                text: "各省卫生水平",
+                textStyle: {
+                    color: 'white'
+                },
+                left: '50%',
+                top: '5%'
+
+            },
+            color: ['rgba(89,238,242,1)'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '0%',
+                right: '4%',
+                bottom: '5%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+
+                    type: 'category',
+                    data: xdata,
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLabel: {
+                        color: 'white',
+                        interval: 0
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    name: "每千人拥有卫生技术人员（人）",
+                    nameTextStyle: {
+                        color: 'white',
+                        padding: [10, 10, 0, 130]
+                    },
+                    type: 'value',
+                    axisLabel: {
+                        color: 'white'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '每千人拥有卫生技术人员',
+                    type: 'bar',
+                    barWidth: '60%',
+                    barCategoryGap: '1%',
+                    data: data
+                }
+            ]
+        };
+        myChart.setOption(option);
+        //让图表随窗口大小自适应调整
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+    }
+
+    // 左上词云图a7
+    (function () {
+
+        var colors = [ '#59eef2',
+              '#80f1f4', '#9ff4f6','#2fd1d5','#d5a9a0',
+            '#d2fafb', '#ffffff', '#87CEEB','#8cffff','#4c68ff'];
+        var maskImage = new Image();
+        maskImage.src = "{{ maskImagesrc }}";
+        var optionFour = {
+            tooltip: {
+                show: true
+            },
+            series: [{
+                name: '关键字占比',
+                type: 'wordCloud',
+                {#gridSize: 10,#}
+                gridSize: 1,
+                {#rotationRange: [-45, 0, 45, 90],#}
+                sizeRange: [8, 28],//文字范围
+                {#//文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转#}
+                rotationRange: [-45, 90],
+                rotationStep: 45,
+                textRotation: [0, 45, 90, -45],
+                //形状
+                {#shape: 'pentagon',#}
+                maskImage: maskImage,
+                textStyle: {
+                    normal: {
+                        color: function () {
+                            return colors[parseInt(Math.random() * 10)];
+                        }
+                    },
+                    //悬停上去的字体的阴影设置
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowColor: '#1ce7ee'
+                    }
+                },
+                data: {{cy|safe }}
+            }]
+        };
+        var myChart = echarts.init(document.querySelector('.a7 .chart'));
+        maskImage.onload = function(){myChart.setOption(optionFour)};
+        {#myChart.setOption(optionFour);#}
+        {#maskImage.onload = function(){myChart.setOption(optionFour)};#}
+
+    })();
+
+    //窗口点击按钮
+    (function () {
+        $("#education").click(function () {
+            showRL_StudentsInSchool()
+        });
+
+        $("#citypopulationrate").click(function () {
+            ShowCityRareRelationship();
+        });
+        $("#gdp").click(function () {
+            showRL_GDP();
+        });
+        $("#doctor").click(function () {
+            showMedical();
+        });
+    })();
+
+    //中间地图
+    class MapComponent {
+        constructor(container) {
+            this.container = container || null;
+            this.province = {{ province | safe }};
+            this.data = {{ data }};
+            this.dateChange = {{ dateChange | safe }};
+            this.option = null;
+            this.myChart = null;
+        }
+
+        init() {
+            this.myChart = echarts.init(this.container);
+            this.option = {
+                baseOption: {
+                    timeline: {
+                        axisType: 'category',
+                        autoPlay: true,
+                        playInterval: 100,
+                        symbolSize: 0,
+                        left: '5%',
+                        right: '5%',
+                        bottom: '0%',
+                        width: '90%',
+                        lineStyle: {
+                            color: "white"
+                        },
+                        label: {
+                            color: "white"
+                        },
+                        controlStyle: {
+                            position: 'center'
+                        },
+                        data: this.dateChange,
+                        tooltip: {
+                            show: true,
+                            formatter: this.dateChange
+                        },
+                    },
+                    tooltip: {
+                        show: true,
+                        formatter: function (params) {
+                            // console.log(params);
+                            return params.name + '：' + params.data['value']
+                        },
+                    },
+                    visualMap: {
+                        type: 'piecewise',
+
+                        pieces: [
+                            {
+                                min: 10000,
+                                color: 'rgba(245,114,108,0.8)'
+                            },
+                            {
+                                min: 2000,
+                                max: 9999,
+                                color: 'rgba(89,238,242,0.8)'
+                            },
+                            {
+                                min: 1000,
+                                max: 1999,
+                                color: 'rgba(128,241,244,0.9)'
+                            },
+                            {
+                                min: 500,
+                                max: 999,
+                                color: 'rgba(186,247,248,0.8)'
+                            },
+                            {
+                                min: 100,
+                                max: 499,
+                                color: 'rgba(210,250,251,0.9)'
+                            },
+                            {
+                                min: 10,
+                                max: 99,
+                                color: 'rgba(233,253,253,0.8)'
+                            },
+                            {
+                                min: 1,
+                                max: 9,
+                                color: 'rgba(255,255,255,0.9)'
+                            }
+                        ],
+                        orient: 'vertical',
+                        itemWidth: 25,
+                        itemHeight: 15,
+                        showLabel: true,
+                        seriesIndex: [0],
+
+                        textStyle: {
+                            color: '#7B93A7'
+                        },
+                        bottom: '10%',
+                        left: "5%",
+                    },
+                    grid: {
+                        right: '5%',
+                        top: '20%',
+                        bottom: '10%',
+                        width: '20%'
+                    },
+                    xAxis: {
+                        show: false
+                    },
+                    yAxis: {
+                        show: false
+                    },
+                    geo: {
+                        map: 'china',
+                        right: '5%',
+                        left: '5%',
+                        label: {
+                            emphasis: {
+                                show: false,
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                //地图省份的颜色
+                                areaColor: 'rgba(20,41,87,0.5)',
+                                borderColor: '#0e94ea'
+
+                            },
+                            emphasis: {
+                                areaColor: 'rgba(11,28,45,0.2)'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'mapSer',
+                        type: 'map',
+                        map: 'china',
+                        roam: false,
+                        geoIndex: 0,
+                        label: {
+                            show: false,
+                        },
+                    },
+                    ],
+                },
+                animationDurationUpdate: 3000,
+                animationEasingUpdate: 'quinticInOut',
+                options: []
+            };
+            // for(var i=0;i<dateChange.length;i++){
+            //    this.option.options.push({
+            //         title:{
+            //             text:dateChange[i]
+            //         }
+            //     })
+            // }
+            for (let n = 0; n < 365; n++) {
+                var res = [];
+                for (let j = 0; j < this.data[n].length; j++) {
+                    res.push({
+                        name: this.province[j],
+                        value: this.data[n][j],
+                        date: this.dateChange[n],
+                    });
+                }
+                res.sort(function (a, b) {
+                    return b.value - a.value;
+                }).slice(0, 6);
+                res.sort(function (a, b) {
+                    return a.value - b.value;
+                });
+                var res1 = [];
+                var res2 = [];
+                for (t = 0; t < 10; t++) {
+                    res1[t] = res[res.length - 1 - t].name;
+                    res2[t] = res[res.length - 1 - t].value;
+                }
+                this.option.options.push({
+                    title: {
+                        text: this.dateChange[n],
+                        textStyle: {
+                            color: "white"
+                        },
+                        bottom: "10%",
+                        left: "20%"
+                    },
+                    series: [{
+                        type: 'map',
+                        data: res
+                    }]
+                });
+            }
+            this.myChart.setOption(this.option);
+            console.log(this.myChart);
+        }
+    }
+
+    let mapNode = new MapComponent(document.querySelector(".map .chart"));
+    mapNode.init();
+    //正下疫情人数变化曲线
+    (function () {
+        var myChart = echarts.init(document.querySelector(".linecountry .chart"));
+        var yeardate = {{ yeardate | safe }};
+        var confirm = {{ confirm }};
+        var dead = {{ dead }};
+        var heal = {{ heal }};
+        var nowConfirm = {{ nowConfirm }};
+        var yearConfirmAdd = {{ yearConfirmAdd | safe }};
+        var areanameConfirmAdd = {{ areanameConfirmAdd | safe }};
+        var confirmAddlist = {{ confirmAddlist | safe }};
+        console.log(confirmAddlist[1]);
+        console.log(areanameConfirmAdd);
+        var option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                top: "0%",
+                textStyle: {
+                    color: "rgba(255,255,255,.5)",
+                    fontSize: 12
+                },
+                data: ['累计确诊数', '治愈总人数', '死亡总人数', '现存确诊']
+            },
+            grid: {
+                left: '10',
+                top: "30",
+                right: '10',
+                bottom: '10',
+                containLabel: true
+            },
+
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: yeardate,
+                axisLabel: {
+                    color: "#4c9bfd",//文本颜色,
+                    fontSize: 8
+                }
+            },
+            yAxis: [{
+                type: 'value',
+                {#min: 70000,#}
+
+                axisLabel: {
+                    color: "#4c9bfd"//文本颜色
+                },
+                axisLine: {
+                    show: false//去除轴线
+                },
+                splitLine: {
+                    lineStyle: "#012f4a" //分割线颜色
+                }
+            },
+                {
+                    type: 'value',
+                    {#min: 0,#}
+                    {#max: 15000,#}
+                    axisLabel: {
+                        color: "#4c9bfd"//文本颜色
+                    },
+                    axisLine: {
+                        show: false//去除轴线
+                    },
+                    splitLine: {
+                        lineStyle: "#012f4a" //分割线颜色
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '累计确诊数',
+                    type: 'line',
+                    smooth: true,
+                    data: confirm,
+                    color: 'rgba(245,114,108,1)'
+                },
+
+                {
+                    name: '治愈总人数',
+                    type: 'line',
+                    smooth: true,
+                    color:      'rgba(89,238,242,1)',
+                    data: heal
+                },
+                {
+                    name: '死亡总人数',
+                    type: 'line',
+                    smooth: true,
+                    color: 'rgba(139,137,137,0.8)',
+                    yAxisIndex: '1',
+                    data: dead
+                },
+                {
+                    name: '现存确诊',
+                    type: 'line',
+                    smooth: true,
+                    yAxisIndex: '1',
+                    color: '#37a2da',
+                    data: nowConfirm
+                }
+
+            ]
+        };
+
+        myChart.setOption(option);
+        //让图表跟随屏幕在自动的去适应
+        window.addEventListener('resize', function () {
+            myChart.resize();
+        });
+
+        $(".linecountry h2").on("click", "a", function () {
+            //console.log($(this).index());
+            //点击a之后根据a的索引号找到对应的yearData的相关对象
+            //console.log(yearData[$(this).index()]);
+
+
+            function showGraph(graphname) {
+
+                //显示
+                if (graphname == "全国疫情人数变化曲线") {
+                    //console.log(totalCountChange);
+                    myChart.clear();
+
+                    {#var yeardate = {{ yeardate | safe }};#}
+                    {#var confirm = {{ confirm }};#}
+                    {#var dead = {{ dead }};#}
+                    {#var heal = {{ heal }};#}
+                    {#var nowConfirm = {{ nowConfirm }};#}
+                    var option = {
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            top: "0%",
+                            textStyle: {
+                                color: "rgba(255,255,255,.5)",
+                                fontSize: 12
+                            },
+                            data: ['累计确诊数', '治愈总人数', '死亡总人数', '现存确诊']
+                        },
+                        grid: {
+                            left: '10',
+                            top: "30",
+                            right: '10',
+                            bottom: '10',
+                            containLabel: true
+                        },
+
+                        xAxis: {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: yeardate,
+                            axisLabel: {
+                                color: "#4c9bfd",//文本颜色,
+                                fontSize: 8
+                            }
+                        },
+                        yAxis: [{
+                            type: 'value',
+                            {#min: 70000,#}
+
+                            axisLabel: {
+                                color: "#4c9bfd"//文本颜色
+                            },
+                            axisLine: {
+                                show: false//去除轴线
+                            },
+                            splitLine: {
+                                lineStyle: "#012f4a" //分割线颜色
+                            }
+                        },
+                            {
+                                type: 'value',
+                                {#min: 5000,#}
+                                axisLabel: {
+                                    color: "#4c9bfd"//文本颜色
+                                },
+                                axisLine: {
+                                    show: false//去除轴线
+                                },
+                                splitLine: {
+                                    lineStyle: "#012f4a" //分割线颜色
+                                }
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '累计确诊数',
+                                type: 'line',
+                                smooth: true,
+                                data: confirm,
+                                color: 'rgba(255,0,0,0.8)'
+                            },
+
+                            {
+                                name: '治愈总人数',
+                                type: 'line',
+                                smooth: true,
+                                color: 'MediumSpringGreen',
+                                data: heal
+                            },
+                            {
+                                name: '死亡总人数',
+                                type: 'line',
+                                smooth: true,
+                                color: 'rgba(139,137,137,0.8)',
+                                yAxisIndex: '1',
+                                data: dead
+                            },
+                            {
+                                name: '现存确诊',
+                                type: 'line',
+                                smooth: true,
+                                yAxisIndex: '1',
+                                color: 'MediumOrchid',
+                                data: nowConfirm
+                            }
+
+                        ]
+                    };
+
+                    myChart.setOption(option);
+                    //让图表跟随屏幕在自动的去适应
+                    window.addEventListener('resize', function () {
+                        myChart.resize();
+                    });
+                } else {
+                    myChart.clear();//清理画布，重绘堆叠条形图
+
+                    var option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                            },
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        },
+                        legend: {
+                            data: areanameConfirmAdd,
+                            textStyle: {
+                                color: 'white'
+                            },
+                            orient: 'horizontal',
+                            itemWidth: 2
+                        },
+                        dataZoom: [
+                            {
+                                show: true,
+                                start: 0,
+                                end: 100,
+                                height: 10,
+                                bottom: 0
+                            },
+                            {
+                                type: 'inside',
+                                start: 0,
+                                end: 100
+                            },
+                            {
+                                show: true,
+                                yAxisIndex: 0,
+                                filterMode: 'empty',
+                                top: 0,
+                                width: 10,
+                                height: '70%',
+                                showDataShadow: false,
+                                left: '99%'
+                            }
+                        ],
+                        grid: {
+
+                            left: '0%',
+                            right: '0',
+                            bottom: '0%',
+                            containLabel: true
+                        },
+
+                        yAxis: {
+                            type: 'value',
+                            splitLine: {
+                                show: false
+                            },
+                            axisLabel: {
+                                color: 'white'
+                            }
+                        },
+                        xAxis: {
+                            type: 'category',
+                            axisLabel: {
+                                color: 'white'
+                            },
+                            splitLine: {
+                                show: false
+                            },
+                            data: yearConfirmAdd,
+                        },
+                        series: [
+                            {
+                                name: areanameConfirmAdd[0],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[0],
+                            },
+                            {
+                                name: areanameConfirmAdd[1],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[1],
+                            },
+                            {
+                                name: areanameConfirmAdd[2],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[2],
+                            },
+                            {
+                                name: areanameConfirmAdd[3],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[3],
+                            },
+                            {
+                                name: areanameConfirmAdd[4],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[4],
+                            },
+                            {
+                                name: areanameConfirmAdd[5],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[5],
+                            },
+                            {
+                                name: areanameConfirmAdd[6],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[6],
+                            },
+                            {
+                                name: areanameConfirmAdd[7],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[7],
+                            },
+                            {
+                                name: areanameConfirmAdd[8],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[8],
+                            },
+                            {
+                                name: areanameConfirmAdd[9],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[9],
+                            },
+                            {
+                                name: areanameConfirmAdd[10],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[10],
+                            },
+                            {
+                                name: areanameConfirmAdd[11],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[11],
+                            },
+                            {
+                                name: areanameConfirmAdd[12],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[12],
+                            },
+                            {
+                                name: areanameConfirmAdd[13],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[13],
+                            },
+                            {
+                                name: areanameConfirmAdd[14],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[14],
+                            },
+                            {
+                                name: areanameConfirmAdd[15],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[15],
+                            },
+                            {
+                                name: areanameConfirmAdd[16],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[16],
+                            },
+                            {
+                                name: areanameConfirmAdd[17],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[17],
+                            },
+                            {
+                                name: areanameConfirmAdd[18],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[18],
+                            },
+                            {
+                                name: areanameConfirmAdd[19],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[19],
+                            },
+                            {
+                                name: areanameConfirmAdd[20],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[20],
+                            },
+                            {
+                                name: areanameConfirmAdd[21],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[21],
+                            },
+                            {
+                                name: areanameConfirmAdd[22],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[22],
+                            },
+                            {
+                                name: areanameConfirmAdd[23],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[23],
+                            },
+                            {
+                                name: areanameConfirmAdd[24],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[24],
+                            },
+                            {
+                                name: areanameConfirmAdd[25],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[25],
+                            },
+                            {
+                                name: areanameConfirmAdd[26],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[26],
+                            },
+                            {
+                                name: areanameConfirmAdd[27],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[27],
+                            },
+                            {
+                                name: areanameConfirmAdd[28],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[28],
+                            },
+                            {
+                                name: areanameConfirmAdd[29],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[29],
+                            },
+                            {
+                                name: areanameConfirmAdd[30],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[30],
+                            },
+                            {
+                                name: areanameConfirmAdd[31],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[31],
+                            },
+                            {
+                                name: areanameConfirmAdd[32],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[32],
+                            },
+                            {
+                                name: areanameConfirmAdd[33],
+                                type: 'bar',
+                                stack: '总量',
+
+                                data: confirmAddlist[33],
+                            }
+                        ]
+                    };
+
+                    myChart.setOption(option);
+
+                }
+            };
+            showGraph($(this).text());//根据点击状况重新渲染图表
+
+        })
+
+
+    })();
+</script>
+<script src="../static/output/datas.js"></script>
+<script src="../static/output/index.js"></script>
+<script src="../static/output/worldZH.js"></script>
+</body>
+</html>

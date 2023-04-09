@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>请登录</title>
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css"/>
+</head>
+<body>
+<div id="Login-box">
+    <h2 style="color: #fff;">Login</h2>
+    <div class="form">
+        <form name="Form" method="POST" action="{% url 'do_login' %}">
+            <div class="item">
+                <i class="fa fa-user-circle-o" aria-hidden="true">用户名称&nbsp;:&nbsp;</i>
+                <input type="text" placeholder="Username" name="username" autofocus required/>
+            </div>
+            <div class="item">
+                <i class="fa fa-key" aria-hidden="true">用户密码&nbsp;:&nbsp;</i>
+                <input type="password" placeholder="Password" name="password" autofocus required/>
+            </div>
+            <div style="color: #f83600">{{ error }}</div>
+            <button type="submit">立即登录</button>
+            <a id="register" href="{% url 'register' %}">没有账号？去注册</a>
+        </form>
+    </div>
+</div>
+</body>
+
+<script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+{#<script src="../static/js/live2d.js"></script>#}
+<script>
+    L2Dwidget.init({
+        "model": {
+            "jsonPath": "https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json",
+            "scale": 1
+        },
+        "display": {
+            "position": "left",
+            "width": 150,
+            "height": 210,
+            "hOffset": 0,
+            "vOffset": -20
+        },
+        "mobile": {
+            "show": true,
+            "scale": 1
+        },
+        "react": {
+            "opacityDefault": 0.7,
+            "opacityOnHover": 0.2
+        },
+        "dialog": {
+            "enable": true,
+            "script": {
+                //每20s，显示一言（调用一言Api返回的句子）
+                'every idle 20s': '$hitokoto$',
+                //触摸到class='star'对象
+                'hover .star': '星星在天上而你在我心里 (*/ω＼*)',
+                //触摸到身体
+                'tap body': '害羞⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄',
+                //触摸到头部
+                'tap face': '~~'
+            }
+        }
+    });
+</script>
+
+</html>
+

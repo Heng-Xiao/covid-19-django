@@ -1,0 +1,105 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url("../img/login2.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+
+#Login-box {
+  width: 25%;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 17%;
+  padding: 20px 20px 30px 20px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+#Login-box .form .item {
+  margin-top: 13px;
+}
+
+#Login-box .form .item i {
+  font-size: 16px;
+  color: #fff;
+  font-style:normal;
+  /*font-family:"STXingkai"*/
+}
+
+#Login-box .form .item input {
+  border: 0;
+  border-bottom: 1px solid white;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0);
+
+
+}
+
+input::-webkit-input-placeholder {
+  color: #999;
+}
+
+#Login-box .form button {
+  margin-top: 15px;
+  width: 150px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+  border: 0;
+  border-radius: 15px;
+  transition: 0.9s;
+}
+#register {
+  margin-top: 15px;
+  width: 150px;
+  height: 30px;
+  font-size: 13px;
+  font-weight: 300;
+  font-family: Arial, Helvetica, sans-serif;
+  /*background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);*/
+  border: 0;
+  border-radius: 15px;
+  transition: 0.9s;
+
+}
+
+#Login-box .form #register:hover {
+  transform: scale(1.1) translate3d(0, 0, 0);
+  transition: 0.4s;
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+}
+
+#Login-box .form button:hover {
+  transform: scale(1.1) translate3d(0, 0, 0);
+  transition: 0.4s;
+  background-image: linear-gradient(to right, #f83600 0%, #f9d423 100%);
+}
+
+#Login-box #Register {
+  font-size: 13px;
+  float: right;
+  bottom: 15px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+a {
+  color: #fff;
+  transition: 1s;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fff;
+  transition: 0.4s;
+}

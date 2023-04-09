@@ -1,0 +1,23 @@
+--安装需要包
+pip install -r requirements.txt
+--更换数据库密码
+connect.py和settings.py文件下
+----------connect.py----------
+conn = Connect(user="root",
+                   password="000000",
+                   host="127.0.0.1",
+                   database="covid-19",
+                   port=3306,
+                   charset="utf8", )
+----------settings.py----------
+DATABASES = {
+    'default':
+    {
+        'ENGINE': 'django.db.backends.mysql',    # 数据库引擎
+        'NAME': 'covid-19', # 数据库名称
+        'HOST': '127.0.0.1', # 数据库地址，本机 ip 地址 127.0.0.1
+        'PORT': 3306, # 端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '000000', # 数据库密码
+    }
+}
