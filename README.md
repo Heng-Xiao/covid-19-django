@@ -31,13 +31,12 @@
 
 ## 在线体验
 
-👩‍👧‍👦演示地址：[http://demo.django-vue-admin.com](http://demo.django-vue-admin.com) 
+👩‍👧‍👦演示地址：[http://www.henglulu.top](http://www.henglulu.top) 
 
-- 账号：superadmin 
+- 账号：admin 
 
-- 密码：admin123456
+- 密码：admin
 
-👩‍👦‍👦文档地址：[https://django-vue-admin.com](https://django-vue-admin.com)
 
 
 
