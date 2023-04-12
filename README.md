@@ -93,8 +93,9 @@ Redis(可选，最新版)
 ## 前端♝
 
 ```bash
---安装需要包
-pip install -r requirements.txt
+--安装依赖环境
+  pip install -r requirements.txt
+
 --更换数据库密码
 --进入connect.py和settings.py文件修改下
 
@@ -117,6 +118,9 @@ DATABASES = {
         'PASSWORD': '000000', # 数据库密码
     }
 }
+
+--启动项目
+  python3 manage.py runserver 0.0.0.0:8000
 ```
 
 
