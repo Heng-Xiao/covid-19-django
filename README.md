@@ -93,21 +93,30 @@ Redis(可选，最新版)
 ## 前端♝
 
 ```bash
-# 克隆项目
-git clone https://gitee.com/liqianglog/django-vue-admin.git
+--安装需要包
+pip install -r requirements.txt
+--更换数据库密码
+--进入connect.py和settings.py文件修改下
 
-# 进入项目目录
-cd web
-
-# 安装依赖
-npm install --registry=https://registry.npm.taobao.org
-
-# 启动服务
-npm run dev
-# 浏览器访问 http://localhost:8080
-# .env.development 文件中可配置启动端口等参数
-# 构建生产环境
-# npm run build
+--connect.py
+conn = Connect(user="root",
+                   password="000000",
+                   host="127.0.0.1",
+                   database="covid-19",
+                   port=3306,
+                   charset="utf8", )
+--settings.py
+DATABASES = {
+    'default':
+    {
+        'ENGINE': 'django.db.backends.mysql',    # 数据库引擎
+        'NAME': 'covid-19', # 数据库名称
+        'HOST': '127.0.0.1', # 数据库地址，本机 ip 地址 127.0.0.1
+        'PORT': 3306, # 端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '000000', # 数据库密码
+    }
+}
 ```
 
 
