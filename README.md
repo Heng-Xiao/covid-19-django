@@ -14,7 +14,7 @@
 
 ## 平台简介
 
-[COVID-19-Django](https://gitee.com/Heng-Xiao/covid-19-django)国内疫情大数据可视化平台主要是为了更直观地实时关注和掌握新型冠状病毒感染的肺炎疫情防控进展，也更直观地了解全国的疫情情况，及时有效做出防控措施，在数据可视化技术的解决下，数据信息所面向的不仅是决策者，也能向大众进行授权展示，我们可以通过大数据可视化，可以更清楚、更直观地了解到目前疫情全国各地的感染人数，以此了解疫情的变化的趋势。
+[COVID-19-Django](https://gitee.com/Heng-Xiao/covid-19-django) 国内疫情大数据可视化平台主要是为了更直观地实时关注和掌握新型冠状病毒感染的肺炎疫情防控进展，也更直观地了解全国的疫情情况，及时有效做出防控措施，在数据可视化技术的解决下，数据信息所面向的不仅是决策者，也能向大众进行授权展示，我们可以通过大数据可视化，可以更清楚、更直观地了解到目前疫情全国各地的感染人数，以此了解疫情的变化的趋势。
 
 💡 [COVID-19-Django](https://gitee.com/Heng-Xiao/covid-19-django) 基于Django的国内疫情可视化平台，目前已开源分享。
 
@@ -38,12 +38,7 @@
 
 ## 交流
 
-- 交流社区：[戳我](https://bbs.django-vue-admin.com)👩‍👦‍👦
-
-- 插件市场：[戳我](https://bbs.django-vue-admin.com/plugMarket.html)👩‍👦‍👦
-
--  django-vue-admin交流01群(已满)：812482043 [点击链接加入群聊](https://qm.qq.com/cgi-bin/qm/qr?k=aJVwjDvH-Es4MPJQuoO32N0SucK22TE5&jump_from=webapi)
--  django-vue-admin交流02群：687252418  [点击链接加入群聊](https://qm.qq.com/cgi-bin/qm/qr?k=4jJN4IjWGfxJ8YJXbb_gTsuWjR34WLdc&jump_from=webapi)
+-  covid-19-django交流群：812482043 [点击链接加入群聊](https://qm.qq.com/cgi-bin/qm/qr?k=aJVwjDvH-Es4MPJQuoO32N0SucK22TE5&jump_from=webapi)
 
 - 二维码
 
@@ -51,9 +46,9 @@
 
 ## 源码地址
 
-gitee地址(主推)：[https://gitee.com/liqianglog/django-vue-admin](https://gitee.com/liqianglog/django-vue-admin)👩‍👦‍👦
+gitee地址(主推)：[https://gitee.com/Heng-Xiao/covid-19-django](https://gitee.com/Heng-Xiao/covid-19-django)👩‍👦‍👦
 
-github地址：[https://github.com/liqianglog/django-vue-admin](https://github.com/liqianglog/django-vue-admin)👩‍👦‍👦
+github地址：[https://gitee.com/Heng-Xiao/covid-19-django](https://gitee.com/Heng-Xiao/covid-19-django)👩‍👦‍👦
 
 
 
@@ -71,11 +66,6 @@ github地址：[https://github.com/liqianglog/django-vue-admin](https://github.c
 10.  🗓️操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
 11.  🔌[插件市场 ](https://bbs.django-vue-admin.com/plugMarket.html)：基于Django-Vue-Admin框架开发的应用和插件。
 
-##  插件市场 🔌
-
-- Celery异步任务：[dvadmin-celery](https://gitee.com/huge-dream/dvadmin-celery)
-- 升级中心后端：[dvadmin-upgrade-center](https://gitee.com/huge-dream/dvadmin-upgrade-center)
-- 升级中心前端：[dvadmin-upgrade-center-web](https://gitee.com/huge-dream/dvadmin-upgrade-center-web)
 
 ## 准备工作
 ~~~
@@ -124,35 +114,6 @@ python3 manage.py runserver 0.0.0.0:8000
 - 访问地址：[http://localhost:8000](http://localhost:8000) (默认为此地址，如有修改请按照配置文件)
 - 账号：`admin` 密码：`admin`
 
-
-
-
-
-### docker-compose 运行
-
-~~~shell
-# 先安装docker-compose (自行百度安装),执行此命令等待安装，如有使用celery插件请打开docker-compose.yml中celery 部分注释
-docker-compose up -d
-# 初始化后端数据(第一次执行即可)
-docker exec -ti dvadmin-django bash
-python manage.py makemigrations 
-python manage.py migrate
-python manage.py init_area
-python manage.py init
-exit
-
-前端地址：http://127.0.0.1:8080
-后端地址：http://127.0.0.1:8080/api
-# 在服务器上请把127.0.0.1 换成自己公网ip
-账号：superadmin 密码：admin123456
-
-# docker-compose 停止
-docker-compose down
-#  docker-compose 重启
-docker-compose restart
-#  docker-compose 启动时重新进行 build
-docker-compose up -d --build
-~~~
 
 
 
