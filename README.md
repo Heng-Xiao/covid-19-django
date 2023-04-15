@@ -6,6 +6,9 @@
 
 ![输入图片说明](http://rt5c1mogb.hn-bkt.clouddn.com/covid/1.png)
 
+[2022-06-27-230031.png](https://postimg.cc/4mMRhHjx)
+[![2022-06-27-230031.png](https://i.postimg.cc/4x4fqz5V/2022-06-27-230031.png)](https://postimg.cc/4mMRhHjx)
+
 
 💡 **「关于」**
 
