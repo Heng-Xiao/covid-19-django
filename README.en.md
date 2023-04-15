@@ -2,22 +2,22 @@
 
 [![img](https://img.shields.io/badge/python-%3E=3.8.x-green.svg)](https://python.org/)  [![PyPI - Django Version badge](https://img.shields.io/badge/django%20versions-4.1-blue)](https://docs.djangoproject.com/zh-hans/4.1/) [![img](https://img.shields.io/badge/Echats-%3E%3D%204.2.1-brightgreen)](https://echarts.apache.org/zh/index.html) 
 
-[English](./README.en.md) | [预 览](http://www.henglulu.top) | [官网文档](https://www.django-vue-admin.com) | [群聊](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [Github](https://github.com/liqianglog/django-vue-admin) 
+[English](./README.en.md) | [preview](http://www.henglulu.top)  | [Group chat](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [Github](https://github.com/liqianglog/django-vue-admin) 
 
 
-💡 **「关于」**
+💡 **「About ME」**
 
-花有重开日，人无再少年。
+A flower may bloom again, but a man is never young again.
 
-大家好，我是一只二二届毕业的蛋蛋后小菜鸟，平时没事就喜欢瞎写，此系统于2022年所写，目前已开源。
+Hello, everyone. I am a post-00s rookie who graduated in 2022. I like to write blindly at ordinary times.
 
-座右铭：业精于勤，荒于嬉；行成于思，毁于随。
+motto：Practice is diligent, shortage in one; Success depends on thought and ruin.
 
-因为热爱，所以拥抱未来。
+Because of love, so embrace the future.
 
-好事总会发生在下个转弯，祝大家愿望都一一实现！！
+Good things always happen in the next turn, I wish you all wish come true!!
 
-## 平台简介
+## Platform introduction
 
 [COVID-19-Django](https://gitee.com/Heng-Xiao/covid-19-django) 国内疫情大数据可视化平台主要是为了更直观地实时关注和掌握新型冠状病毒感染的肺炎疫情防控进展，也更直观地了解全国的疫情情况，及时有效做出防控措施，在数据可视化技术的解决下，数据信息所面向的不仅是决策者，也能向大众进行授权展示，我们可以通过大数据可视化，可以更清楚、更直观地了解到目前疫情全国各地的感染人数，以此了解疫情的变化的趋势。
 
