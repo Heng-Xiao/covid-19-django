@@ -54,7 +54,7 @@ def do_register(request):
         cur.execute(sql1, (username, password))  # 执行sql语句
         cur.connection.commit()
         data1 = cur.fetchall()
-        return HttpResponseRedirect("/login")#注册成功重定向回登录页面
+        return HttpResponseRedirect("/index")#注册成功重定向回登录页面
 def register(request):
     return render(request, "register.html")
 
