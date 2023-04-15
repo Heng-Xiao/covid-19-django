@@ -61,8 +61,8 @@ github地址：[https://gitee.com/Heng-Xiao/covid-19-django](https://gitee.com/H
 
 ## 内置功能
 
-1.  👨‍⚕️用户登录：用户登录注册功能。
-2.  👩‍⚕️数据爬取：数据爬取脚本，直接将疫情数据爬取到MySQL数据库中。
+1.  👨‍⚕️用户登录：用户登录和注册功能。
+2.  👩‍⚕️数据爬取：数据爬取脚本GetData.py和SaveMysqlData.py，直接将疫情数据爬取到MySQL数据库中。
 3.   :grapes: 数据更新：数据重新爬取并且更新数据。
 4.  👨‍🎓疫情可视化大屏：从MySQL数据库将数据取出并且整理将其用来做数据可视化。
 
