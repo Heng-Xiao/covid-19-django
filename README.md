@@ -115,7 +115,7 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ## 演示图✅
 
-![image-111](http://rt5c1mogb.hn-bkt.clouddn.com/1.png?e=1681545043&token=mMd9q0OZJH8J_ym9FqIEggECEHye0CRX-tpvyQ6L:hjFTqtF0wJCq0srz_W9RHg89168=)
+![image-111](http://rt5c1mogb.hn-bkt.clouddn.com/1.png)
 
 ![image-01](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-01.jpg)
 
