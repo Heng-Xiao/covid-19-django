@@ -4,7 +4,7 @@
 
 [English](./README.en.md) | [预 览](http://www.henglulu.top) | [官网文档](https://www.django-vue-admin.com) | [群聊](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [Github](https://github.com/liqianglog/django-vue-admin) 
 
-
+![全球疫情大屏一览](%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/1.png)
 
 💡 **「关于」**
 
