@@ -4,7 +4,7 @@
 
 [English](./README.en.md) | [预 览](http://www.henglulu.top) | [官网文档](https://www.django-vue-admin.com) | [群聊](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [Github](https://github.com/liqianglog/django-vue-admin) 
 
-![输入图片说明](http://rt5c1mogb.hn-bkt.clouddn.com/1.png)
+![输入图片说明](https://mmbiz.qpic.cn/mmbiz_png/ibibRb6TL2bRt2w5ovH2JiczwP3EracOhrHSPv8XxZm0PYQWLTibJW974KRFmaWHYgFHQ5e7taFPbu5DOAJia1ibSckA/640?wx_fmt=png)
 
 💡 **「关于」**
 
