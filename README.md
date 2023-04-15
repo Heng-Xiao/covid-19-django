@@ -6,6 +6,7 @@
 
 ![全球疫情大屏一览](https://gitee.com/Heng-Xiao/visualization-of-epidemic-data/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87/1.png)
 
+
 💡 **「关于」**
 
 花有重开日，人无再少年。
@@ -50,7 +51,7 @@
 
 - 二维码
 
-  <img src='https://images.gitee.com/uploads/images/2022/0530/233203_5fb11883_5074988.jpeg' width='200'>
+  <img src='http://rt5c1mogb.hn-bkt.clouddn.com/covid/1.png' width='300'>
 
 ## 源码地址
 
@@ -149,4 +150,4 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ![image-12](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-12.jpg)
 
-![image-13](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-13.jpg)
+![image-13](http://rt5c1mogb.hn-bkt.clouddn.com/covid/1.png)
