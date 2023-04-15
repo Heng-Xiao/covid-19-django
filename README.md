@@ -80,13 +80,14 @@ PyCharm >= 2021
 ## 运行准备♝
 
 ```bash
---在MySQL数据库中新建数据库covid-19
---将covid-19.sql文件中的数据导入到数据库中
+--1.在MySQL数据库中新建数据库covid-19
 
---安装依赖环境
+--2.将covid-19.sql文件中的数据导入到数据库中
+
+--3.安装依赖环境
 pip install -r requirements.txt
 
---更换数据库密码
+--4.更换数据库密码
 --进入connect.py和settings.py文件修改下
 
 --connect.py
@@ -109,7 +110,7 @@ DATABASES = {
     }
 }
 
---启动项目
+--5.启动项目
 python3 manage.py runserver 0.0.0.0:8000
 ```
 
