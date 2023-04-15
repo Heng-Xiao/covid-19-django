@@ -45,10 +45,11 @@
 
 ## 交流
 
--  covid-19-django交流群：812482043 [点击链接加入群聊](https://qm.qq.com/cgi-bin/qm/qr?k=aJVwjDvH-Es4MPJQuoO32N0SucK22TE5&jump_from=webapi)
+- 学习交流QQ群：961263329
 
 - 欢迎关注本人微信公众号
-  <img src='static/img/10.png' width='400'>
+
+  <img src='static/img/10.png' width='500'>
 
 
 ## 源码地址
