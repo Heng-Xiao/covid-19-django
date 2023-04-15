@@ -56,7 +56,7 @@
 
 gitee地址(主推)：[https://gitee.com/Heng-Xiao/covid-19-django](https://gitee.com/Heng-Xiao/covid-19-django)👩‍👦‍👦
 
-github地址：[https://gitee.com/Heng-Xiao/covid-19-django](https://gitee.com/Heng-Xiao/covid-19-django)👩‍👦‍👦
+github地址：[https://github.com/Heng-Xiao/covid-19-django](https://github.com/Heng-Xiao/covid-19-django)👩‍👦‍👦
 
 
 
