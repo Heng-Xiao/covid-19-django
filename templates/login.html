@@ -19,10 +19,11 @@
 					<span class="loginIco1"></span>
 					<input type="text" name="username" placeholder="请输入您的用户名">
 				</div>
+
 				<div class="prompt">
-					<p class="error">用户名错误或不存在</p>
+					<div style="color: #f83600">{{ error }}</div>
 				</div>
-				
+
 				<div class="inpGroup">
 					<span class="loginIco2"></span>
 					<input type="password" name="password" placeholder="请输入您的密码">
