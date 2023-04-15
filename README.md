@@ -50,6 +50,8 @@
 - 欢迎关注本人微信公众号
 
   ![image-01](static/img/10.png)
+  <img src='static/img/10.png' width='200'>
+
 
 ## 源码地址
 
