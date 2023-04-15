@@ -150,4 +150,4 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ![image-12](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-12.jpg)
 
-![image-13](http://rt5c1mogb.hn-bkt.clouddn.com/covid/1.png)
+![image-13](https://img-blog.csdnimg.cn/b85168a8d7724906ad93fe85f39024c0.png)
