@@ -128,16 +128,16 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ![image-02](static/img/2.png)
 
-![image-03](static/img/3.png)
+![image-03](static/img/3.jpg)
 
-![image-04](static/img/4.png)
+![image-04](static/img/4.jpg)
 
-![image-05](static/img/5.png)
+![image-05](static/img/5.jpg)
 
-![image-06](static/img/6.png)
+![image-06](static/img/6.jpg)
 
-![image-07](static/img/7.png)
+![image-07](static/img/7.jpg)
 
-![image-08](static/img/8.png)
+![image-08](static/img/8.jpg)
 
-![image-09](static/img/9.png)
+![image-09](static/img/9.jpg)
