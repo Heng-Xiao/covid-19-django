@@ -69,6 +69,28 @@ github地址：[https://gitee.com/Heng-Xiao/covid-19-django](https://gitee.com/H
 
 
 
+## 详细结构
+
+```
+- covids19 项目名字
+    - connect.py 数据库配置相关
+    - GetData.py Python数据爬虫相关
+    - indexdata.py 数据封装相关
+    - SaveMysqlData.py 将爬取的数据保存到MySQL数据库
+    - settings.py 很重要，整个项目的启动，由配置文件决定
+    - urls.py 路由（总路由）
+    - views.py 视图函数（重点）
+    - wsgi.py wsgi服务器的配置
+- static 静态资源存放路径
+- templates 模板文件（一个一个的html），pycharm创建出来才有这个文件夹
+- venv 项目虚拟环境管理
+- covid-19.sql 数据库里面的数据表
+- manage.py 启动项目，创建app，各种命令的操作
+- requirements.txt 项目运行需要的依赖
+```
+
+
+
 ## 准备工作
 ~~~
 Python >= 3.8.0 (推荐3.8+版本)
