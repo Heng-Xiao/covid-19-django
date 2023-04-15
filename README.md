@@ -4,8 +4,6 @@
 
 [English](./README.en.md) | [预 览](http://www.henglulu.top) | [官网文档](https://www.django-vue-admin.com) | [群聊](https://qm.qq.com/cgi-bin/qm/qr?k=fOdnHhC8DJlRHGYSnyhoB8P5rgogA6Vs&jump_from=webapi) | [Github](https://github.com/liqianglog/django-vue-admin) 
 
-![全球疫情大屏一览](https://covid-xiao.oss-cn-beijing.aliyuncs.com/1.png?Expires=1681547660&OSSAccessKeyId=TMP.3Kent7JTpEYAoDCGY6HYe4CaqdZcQbRHxTjNRtbS6yBFn2aFBB3ojtwjw72qBKqFCGYXdBeYLtWRZrPBcsi9GzfopGvcbq&Signature=FofsXgwEIYhxJ%2B3cElH%2BxrF1jRc%3D)
-![](https://img-blog.csdnimg.cn/b85168a8d7724906ad93fe85f39024c0.png)
 
 💡 **「关于」**
 
