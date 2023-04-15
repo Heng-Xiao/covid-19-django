@@ -126,7 +126,7 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ## 演示图✅
 
-![image-01](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-01.jpg)
+![image-01](https://covid-xiao.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-06-27%20230031.png?Expires=1681547587&OSSAccessKeyId=TMP.3Kent7JTpEYAoDCGY6HYe4CaqdZcQbRHxTjNRtbS6yBFn2aFBB3ojtwjw72qBKqFCGYXdBeYLtWRZrPBcsi9GzfopGvcbq&Signature=coxi6cynoUdT0Ek7w6M14S9%2Ffio%3D)
 
 ![image-02](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-02.jpg)
 
