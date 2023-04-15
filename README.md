@@ -124,28 +124,20 @@ python3 manage.py runserver 0.0.0.0:8000
 
 ## 演示图✅
 
-![image-01](https://covid-xiao.oss-cn-beijing.aliyuncs.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202022-06-27%20230031.png?Expires=1681547587&OSSAccessKeyId=TMP.3Kent7JTpEYAoDCGY6HYe4CaqdZcQbRHxTjNRtbS6yBFn2aFBB3ojtwjw72qBKqFCGYXdBeYLtWRZrPBcsi9GzfopGvcbq&Signature=coxi6cynoUdT0Ek7w6M14S9%2Ffio%3D)
+![image-01](static/img/1.png)
 
-![image-02](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-02.jpg)
+![image-02](static/img/2.png)
 
-![image-03](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-03.jpg)
+![image-03](static/img/3.png)
 
-![image-04](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-04.jpg)
+![image-04](static/img/4.png)
 
-![image-05](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-05.jpg)
+![image-05](static/img/5.png)
 
-![image-06](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-06.jpg)
+![image-06](static/img/6.png)
 
-![image-07](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-07.jpg)
+![image-07](static/img/7.png)
 
-![image-08](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-08.jpg)
+![image-08](static/img/8.png)
 
-![image-09](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-09.jpg)
-
-![image-10](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-10.jpg)
-
-![image-11](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-11.jpg)
-
-![image-12](https://kfm-waiter.oss-cn-zhangjiakou.aliyuncs.com/dvadmin/img/docs/demo-12.jpg)
-
-![image-13](https://img-blog.csdnimg.cn/b85168a8d7724906ad93fe85f39024c0.png)
+![image-09](static/img/9.png)
