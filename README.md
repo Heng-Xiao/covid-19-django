@@ -47,7 +47,7 @@
 
 - 学习交流QQ群：961263329     [点击这里加入群聊](https://jq.qq.com/?_wv=1027&k=sLyuUZHU)
 
-- 欢迎关注本人微信公众号
+- 欢迎关注本人微信公众号 ：程序猿代码之路
 
   <img src='static/img/10.png' width='500'>
 
